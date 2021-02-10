@@ -28,6 +28,19 @@
         echo "<br>";
     }
     ?>
+
+    <?php//################################?>
+    <hr>
+    <h1>Associative Arrays without key </h1>
+    <?php
+    $age = array("Peter" => "35", "ben" => "37", "Joe" => "43");
+
+    echo "<h3>Traverse foreach loop index=>value</h3>";
+    foreach ($age as  $x_value) {
+        echo "Key=" .  ", Value=" . $x_value;
+        echo "<br>";
+    }
+    ?>
     <?php//################################?>
     <hr>
     <h1>Multidimensional Arrays, internal arrays can have different length</h1>
