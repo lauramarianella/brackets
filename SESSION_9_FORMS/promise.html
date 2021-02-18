@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let p = new Promise((myResolve, myReject) => {  
+            let x = 0;
+
+            // The producing code (this may take some time)
+            if (x == 0) {
+                myResolve("OK, success");
+            } else {
+                myReject("Error, failed cuz it's not zero");
+            }
+        });
+
+        p.then((output) => {console.log('Okay, send by method: '+ output);return 1;})
+        .then((output) => {console.log('Okay, send by method: '+ output);return 2;})
+        .then((output) => {console.log('Okay, send by method: '+ output);})
+        .catch((error) => {console.error(error)});
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

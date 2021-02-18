@@ -1,6 +1,5 @@
 (function() {
-    "use strict";
-    const URL = "greeter2.php";
+    const URL = "RESTFul1Greeter.php";
   
     window.addEventListener("load", initialize);
   
@@ -9,25 +8,23 @@
     }
   
     function getHello() {
+      showHello("");
       let url = URL;
       let name = $("name").value;
-      //if(name==''){alert('Write a name'); return;};
       url += "?name=" + name;
-      alert(url);
+      alert('This is the resource: ' + url);
+      console.log('URL: ' + url);
       fetch(url)
-      .then(function(res) {
-        var respond = res;
-        return res.text(); 
-      })
-      .then(showhello);
+        .then(checkStatus) // Note that our web service returns plain text, not JSON!
+        .then(showHello)
+        .catch(console.log);
     }
-    
-    let showhello = function(result){
-      let objPerson = JSON.parse(result);
-      $("result").innerText = `Name: ${objPerson.name}, age:${objPerson.age}, city:${objPerson.city}`;
+  
+    function showHello(messageText) {
+      console.log('This is the server response: ' + messageText);
+      $("result").innerText = messageText;
     }
-
-    
+  
     /* ------------------------------ Helper Functions  ------------------------------ */
   
     /**
@@ -46,10 +43,11 @@
      * @return {object} - valid result text if response was successful, otherwise rejected
      *                    Promise result
      */
-    function checkStatus(response) {alert(response); 
+    function checkStatus(response) { 
+      console.log(response);
       if (response.status >= 200 && response.status < 300 || response.status == 0) {  
         return response.text();
-      } else {
+      } else {  
         return Promise.reject(new Error(response.status + ": " + response.statusText)); 
       }
     }

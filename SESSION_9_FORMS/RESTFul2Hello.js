@@ -1,6 +1,6 @@
 (function() {
     "use strict";
-    const URL = "greeter.php";
+    const URL = "RESTFul2Greeter.php";
   
     window.addEventListener("load", initialize);
   
@@ -9,23 +9,36 @@
     }
   
     function getHello() {
-      showHello("");
       let url = URL;
       let name = $("name").value;
-      //if(name==''){alert('Write a name'); return;};
       url += "?name=" + name;
-      alert(url);
-      fetch(url)
-        .then(checkStatus) // Note that our web service returns plain text, not JSON!
-        .then(showHello)
-        .catch(console.log);
+
+      let data = new FormData();
+      data.append('cc', $("cc").value);
+
+      fetch(url, { method: 'POST',  body: data })
+      .then(function(res) {
+        var respond = res;
+        return res.text(); 
+      })
+      .then(showhello)
+      .catch(console.log);
     }
-  
-    function showHello(messageText) {
-      console.log(messageText);
-      $("result").innerText = messageText;
+    
+    let showhello = function(result){
+      let arrResponse = JSON.parse(result);
+      let objPerson = arrResponse[2];
+      let method = arrResponse[0];
+      $("method").innerText = `Method: ${method} `;
+      $("result").innerText = `Name: ${objPerson.name}, age:${objPerson.age}, city:${objPerson.city}, Credit Card: ${objPerson.cc}`;
     }
-  
+
+    let showhello2 = function(result){
+      let objPerson = JSON.parse(result);
+      $("result").innerText = `Name: ${objPerson.name}, age:${objPerson.age}, city:${objPerson.city}, Credit Card: ${objPerson.cc}`;
+    }
+
+    
     /* ------------------------------ Helper Functions  ------------------------------ */
   
     /**
@@ -47,7 +60,7 @@
     function checkStatus(response) { 
       if (response.status >= 200 && response.status < 300 || response.status == 0) {  
         return response.text();
-      } else {  
+      } else {
         return Promise.reject(new Error(response.status + ": " + response.statusText)); 
       }
     }
