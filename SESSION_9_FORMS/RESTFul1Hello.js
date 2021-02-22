@@ -12,6 +12,7 @@
       let url = URL;
       let name = $("name").value;
       url += "?name=" + name;
+      url += "&lastname=" + 'zapata';
       alert('This is the resource: ' + url);
       console.log('URL: ' + url);
       fetch(url)

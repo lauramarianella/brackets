@@ -6,20 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        let p = new Promise((myResolve, myReject) => {  
-            let x = 0;
+        let p = new Promise((resolve, reject) => {  
+            let x = 60;
 
             // The producing code (this may take some time)
             if (x == 0) {
-                myResolve("OK, success");
+                resolve(500);
             } else {
-                myReject("Error, failed cuz it's not zero");
+                reject("Error, failed cuz it's not zero");
             }
         });
 
-        p.then((output) => {console.log('Okay, send by method: '+ output);return 1;})
-        .then((output) => {console.log('Okay, send by method: '+ output);return 2;})
-        .then((output) => {console.log('Okay, send by method: '+ output);})
+        p.then((output) => {console.log('Okay, send by method: '+ output);})        
         .catch((error) => {console.error(error)});
     </script>
 </head>
