@@ -1,11 +1,11 @@
 <?php
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$mySqlhost  = "localhost"; //127.0.0.1
+$mySqlhost  = "localhost:3306"; //127.0.0.1
 $username   = "root";
 $password   = "";
 $myDB       = "mystoredb2";
-$charset = "utf8mb4";
+
 $connect = mysqli_connect($mySqlhost, $username, $password, $myDB);
 if (!$connect) {
   die("Connection failed: " . mysqli_connect_error());
@@ -33,11 +33,12 @@ if (!$connect) {
     $result = mysqli_query($connect, $query);
 
     if (mysqli_num_rows($result) > 0) {
-      while ($row = mysqli_fetch_assoc($result)) { //mysqli_fetch_array()
+      while ($row = mysqli_fetch_assoc($result)) { //()mysqli_fetch_array
     ?>
         <div style="border:1px solid #333; background-color:#ffff00; border-radius:5px; padding:16px;" align="center">
           <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '"style="width:200px; height: 200px;"/>'; ?><br />
           <h4><?php echo $row["name"]; ?></h4>
+          <h4><?php echo $row["description"]; ?></h4>
           <h4>$ <?php echo $row["price"]; ?></h4>
         </div>
     <?php
