@@ -22,10 +22,10 @@
          * Prepare requires an “execute” statement whereas query does not.
          * Prepare precompiles*/
         //$stmt = $connect->query("SELECT * FROM items ORDER BY id ASC");
-        $id = 2;
+        //$id = 1;
         $query = "SELECT * FROM items WHERE id=? ORDER BY id ASC";
         $stmt = $connect->prepare($query);
-        $stmt->execute([$id]);
+        $stmt->execute([1]);
 
         //PDO::FETCH_NUM
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -34,12 +34,13 @@
         ?>
             <div style="border:1px solid #333; background-color:#fbd2d7; border-radius:5px; padding:16px;" align="center">
                 <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '"style="width:200px; height: 200px;"/>'; ?><br />
+                <h4><?php echo $row["id"]; ?></h4>
                 <h4><?php echo $row["name"]; ?></h4>
                 <h4><?php echo $row["description"]; ?></h4>
                 <h4>$ <?php echo $row["price"]; ?></h4>
             </div>
         <?php
-        } //End foreach ($stmt->fetchAll() as $k => $row) {
+        } //End if ($row) {
         $connect = null;
         ?>
     </div>

@@ -49,6 +49,7 @@ try {
     ?>
       <div style="border:1px solid #333; background-color:#fbd2d7; border-radius:5px; padding:16px;" align="center">
         <?php echo '<img src="data:image/jpeg;base64,' . base64_encode($row['image']) . '"style="width:200px; height: 200px;"/>'; ?><br />
+        <h4><?php echo $row["id"]; ?></h4>
         <h4><?php echo $row["name"]; ?></h4>
         <h4><?php echo $row["description"]; ?></h4>
         <h4>$ <?php echo $row["price"]; ?></h4>

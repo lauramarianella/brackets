@@ -30,6 +30,9 @@
 
         $connect->exec($sql);
         echo "Table ITEMS created successfully<br/>";
+
+
+        //create users
     } catch (PDOException $e) {
         echo $sql . "<br>" . $e->getMessage();
     }
