@@ -15,13 +15,12 @@ $search2 = isset($_GET["search2"]) ? $_GET["search2"] : null;
 
 <body>
     <div class="col-md-4">
-        <form method="get" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+        <form method="GET" action="<?php echo $_SERVER['PHP_SELF'] ?>">
             <div style="border:1px solid #333; background-color:#f1f1f1; border-radius:5px; padding:16px;" align="center">
                 <h4 class="text-info">Search...</h4>
                 <h4 class="text-info"><input type="text" name="search1" value="<?php echo $search1 ?>" placeholder="Name..." /></h4>
                 <h4 class="text-info"><input type="text" name="search2" value="<?php echo $search2 ?>" placeholder="Description..." /></h4>
                 <input type="submit" style="margin-top:5px;" class="btn btn-success" value="Search" />
-
             </div>
         </form>
     </div>
@@ -32,24 +31,24 @@ $search2 = isset($_GET["search2"]) ? $_GET["search2"] : null;
             /***************************************************/
             if (!empty($search1) && !empty($search2)) {
                 $sql .= " WHERE";
-                $sql .= (!empty($search1)) ? " i.name LIKE :parameter1" : "";
-                $sql .= (!empty($search2)) ? " AND i.description LIKE :param2" : "";
+                $sql .= (!empty($search1)) ? " i.name LIKE :name" : "";
+                $sql .= (!empty($search2)) ? " AND i.description LIKE :descr" : "";
             } else if (!empty($search1)) {
                 $sql .= " WHERE";
-                $sql .= (!empty($search1)) ? " i.name LIKE :parameter1" : "";
+                $sql .= (!empty($search1)) ? " i.name LIKE :name" : "";
             } else if (!empty($search2)) {
                 $sql .= " WHERE";
-                $sql .= (!empty($search2)) ? " i.description LIKE :param2" : "";
+                $sql .= (!empty($search2)) ? " i.description LIKE :descr" : "";
             }
-            echo $sql . '<br/>';
+
             /***************************************************/
             $sql .= " ORDER BY i.id ASC";
 
             include "_dbConnection.php";
             $stmt = $connect->prepare($sql);
 
-            (!empty($search1)) ? $stmt->bindValue(':parameter1', '%' . $search1 . '%') : '';
-            (!empty($search2)) ? $stmt->bindValue(':param2', "%$search2%") : '';
+            (!empty($search1)) ? $stmt->bindValue(':name', '%' . $search1 . '%') : '';
+            (!empty($search2)) ? $stmt->bindValue(':descr', "%$search2%") : '';
 
             $stmt->execute();
 
@@ -67,6 +66,7 @@ $search2 = isset($_GET["search2"]) ? $_GET["search2"] : null;
                     <h4><?php echo $row["name"]; ?></h4>
                     <h4><?php echo $row["description"]; ?></h4>
                     <h4>$ <?php echo $row["price"]; ?></h4>
+                    <td><a href="update.php?id=<?php echo $row['id']; ?>&search1=<?php echo $search1 ?>&search2=<?php echo $search2 ?>"><span class=\"text-danger\">Update</span></a></td>
                 </div>
             <?php
             } //End foreach ($stmt->fetchAll() as $k => $row) {

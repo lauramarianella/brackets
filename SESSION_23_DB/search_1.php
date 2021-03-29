@@ -33,6 +33,8 @@ $search1 = isset($_GET["search1"]) ? $_GET["search1"] : null;
                 $sql = "SELECT i.* FROM items i WHERE i.name LIKE :parameter ORDER BY i.id ASC";
                 $stmt = $connect->prepare($sql);
 
+                echo $sql;
+
                 $stmt->bindValue(':parameter', '%' . $search1 . '%'); //NOTE IT IS NOT bindParam function
 
                 $stmt->execute();
