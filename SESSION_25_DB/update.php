@@ -21,15 +21,16 @@
         $name           = $_POST["name"];
         $description    = $_POST["description"];
         $price          = $_POST["price"];
-        $file           = isset($_FILES["image"]) ? file_get_contents($_FILES['image']['tmp_name']) : null;
+        $file           = isset(($_FILES["image"]['tmp_name'])) ? file_get_contents($_FILES['image']['tmp_name']) : null;
         try {
             $sql = "UPDATE items";
-            if (!empty($name) && !empty($description) && !empty($price)) {
-                $sql .= " SET name = :name ,description = :parameter2 ,price = :price";
+
+            if (!empty($name) && !empty($description) && !empty($price) && !empty($file)) {
+                $sql .= " SET name = :name ,description = :parameter2 ,price = :price ,image = :image";
             }
-            if (!empty($file)) {
+            /*if (!empty($file)) {
                 $sql .= " ,image = :image";
-            }
+            }*/
 
             $sql .= " WHERE id = :id";
 
